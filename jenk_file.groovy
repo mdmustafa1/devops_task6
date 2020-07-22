@@ -28,7 +28,6 @@ kubectl rollout restart deploy/htmldeploy
 kubectl rollout status deploy/htmldeploy
 else
 sudo kubectl apply -k /task3/html
-sudo kubectl expose deploy/htmldeploy --port=80  --type=NodePort
 fi
 fi
 
@@ -41,7 +40,6 @@ kubectl rollout restart deploy/phpdeploy
 kubectl rollout status deploy/phpdeploy
 else
 sudo kubectl apply -k /task3/php
-sudo kubectl expose deploy/phpdeploy --port=80 --type=NodePort
 fi
 fi')
         }}
@@ -53,7 +51,7 @@ fi')
            upstream('job1_pull_build','SUCCESS')
          }
     steps{
-            shell('status=$(curl -o /dev/null -s -w "%{http_code}" 192.168.99.100:31772)
+            shell('status=$(curl -o /dev/null -s -w "%{http_code}" 192.168.99.100:81)
 if [[ $status = 200 ]]
 then
 exit 0
@@ -61,7 +59,7 @@ else
 exit 1
 fi
 
-status=$(curl -o /dev/null -s -w "%{http_code}" 192.168.99.100:31909)
+status=$(curl -o /dev/null -s -w "%{http_code}" 192.168.99.100:82)
 if [[ $status = 200 ]]
 then
 exit 0
