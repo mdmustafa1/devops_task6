@@ -35,4 +35,20 @@ job('job2_deploy'){
     steps{
             shell('status=$(curl -o /dev/null -s -w "%{http_code}" 192.168.99.100:30005); if [[ $status = 200 ]]; then exit 0; else exit 1; fi; status=$(curl -o /dev/null -s -w "%{http_code}" 192.168.99.100:30006); if [[ $status = 200 ]]; then exit 0; else exit 1; fi;')
     }}
+
+publishers {
+        extendedEmail {
+            recipientList('mdmustafahusain4u@gmail.com')
+    
+            triggers {
+     
+                failure {
+                    
+                    sendTo {
+                        recipientList()
+                    }
+                }
+            }
+        }
+    }}
     
