@@ -2,7 +2,7 @@
 
 job('job1_pullbuild'){
      scm{
-             github('https://github.com/mdmustafa1/devops_task6')      
+             github('mdmustafa1/devops_task6')      
          } 
      
             triggers {
