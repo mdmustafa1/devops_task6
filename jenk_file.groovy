@@ -21,7 +21,7 @@ job('job2_deploy'){
      steps{
  shell('cd /var/lib/jenkins/workspace/job2_seed/; 
        if (ls | grep .html);
-then
+then;
 if(sudo kubectl get deploy | grep htmldeploy);
 then;
 echo "html env already running";
@@ -33,9 +33,9 @@ fi;
 fi;
 
 if (ls | grep .php);
-then
+then;
 if(sudo kubectl get deploy | grep phpdeploy);
-then
+then;
 echo "php env already running";
 kubectl rollout restart deploy/phpdeploy;
 kubectl rollout status deploy/phpdeploy;
@@ -47,39 +47,4 @@ fi')
         
   // job3 for monitoring the job and sending the email to developer      
        
-       job('job3_test_monitor'){
-     triggers{
-           upstream('job1_pull_build','SUCCESS')
-         }
-    steps{
-            shell('status=$(curl -o /dev/null -s -w "%{http_code}" 192.168.99.100:81)
-if [[ $status = 200 ]]
-then
-exit 0
-else
-exit 1
-fi
-
-status=$(curl -o /dev/null -s -w "%{http_code}" 192.168.99.100:82)
-if [[ $status = 200 ]]
-then
-exit 0
-else
-exit 1
-fi')
-       }
-     publishers {
-        extendedEmail {
-            recipientList('mdmustafahusain4u@gmail.com')
-    
-            triggers {
-     
-                failure {
-                    
-                    sendTo {
-                        recipientList()
-                    }
-                }
-            }
-        }
-    }}
+      
