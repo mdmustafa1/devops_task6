@@ -20,7 +20,7 @@ job('job2_deploy'){
             upstream('job1_pullbuild','SUCCESS')
          }
      steps{
- shell('cd /var/lib/jenkins/workspace/job2_seed/; if (ls | grep .html); then; if(sudo kubectl get deploy | grep htmldeploy); then; echo "html env already running"; kubectl rollout restart deploy/htmldeploy; kubectl rollout status deploy/htmldeploy; else; sudo kubectl apply -k /task3/html; fi; fi; if (ls | grep .php); then; if(sudo kubectl get deploy | grep phpdeploy); then; echo "php env already running"; kubectl rollout restart deploy/phpdeploy; kubectl rollout status deploy/phpdeploy; else; sudo kubectl apply -k /task3/php; fi; fi')
+ shell('cd /var/lib/jenkins/workspace/job2_seed/; if (ls | grep .html); then if(sudo kubectl get deploy | grep htmldeploy); then echo "html env already running"; kubectl rollout restart deploy/htmldeploy; kubectl rollout status deploy/htmldeploy; else; sudo kubectl apply -k /task3/html; fi; fi; if (ls | grep .php); then if(sudo kubectl get deploy | grep phpdeploy); then echo "php env already running"; kubectl rollout restart deploy/phpdeploy; kubectl rollout status deploy/phpdeploy; else; sudo kubectl apply -k /task3/php; fi; fi')
         }}
 
 
@@ -33,6 +33,6 @@ job('job2_deploy'){
            upstream('job2_deploy','SUCCESS')
          }
     steps{
-            shell('status=$(curl -o /dev/null -s -w "%{http_code}" 192.168.99.100:81); if [[ $status = 200 ]]; then; exit 0; else; exit 1; fi; status=$(curl -o /dev/null -s -w "%{http_code}" 192.168.99.100:82); if [[ $status = 200 ]]; then; exit 0; else; exit 1; fi')
+            shell('status=$(curl -o /dev/null -s -w "%{http_code}" 192.168.99.100:81); if [[ $status = 200 ]]; then exit 0; else; exit 1; fi; status=$(curl -o /dev/null -s -w "%{http_code}" 192.168.99.100:82); if [[ $status = 200 ]]; then exit 0; else; exit 1; fi')
     }}
     
