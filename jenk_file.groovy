@@ -34,7 +34,7 @@ job('job2_deploy'){
          }
     steps{
             shell('status=$(curl -o /dev/null -s -w "%{http_code}" 192.168.99.100:81); if [[ $status = 200 ]]; then; exit 0; else; exit 1; fi; status=$(curl -o /dev/null -s -w "%{http_code}" 192.168.99.100:82); if [[ $status = 200 ]]; then; exit 0; else; exit 1; fi')
-       }
+    }}
      publishers {
         extendedEmail {
             recipientList('mdmustafahusain4u@gmail.com')
@@ -49,10 +49,5 @@ job('job2_deploy'){
                 }
             }
         }
+     }
     
-
-
-
-
-       
-      
